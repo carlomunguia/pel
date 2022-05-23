@@ -6,6 +6,7 @@ import (
 	"pel/apptype"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -16,7 +17,7 @@ type PelCanvasMouseState struct {
 type PelCanvas struct {
 	widget.BaseWidget
 	apptype.PelCanvasConfig
-	// renderer    *PelCanvasRenderer
+	renderer    *PelCanvasRenderer
 	PixelData   image.Image
 	mouseState  PelCanvasMouseState
 	appState    *apptype.State
@@ -51,12 +52,31 @@ func NewBlankImage(cols, rows int, c color.Color) image.Image {
 	return img
 }
 
-func NewPxCanvas(state *apptype.State, config apptype.PelCanvasConfig) *PelCanvas {
+func NewPelCanvas(state *apptype.State, config apptype.PelCanvasConfig) *PelCanvas {
 	pelCanvas := &PelCanvas{
 		PelCanvasConfig: config,
 		appState:        state,
 	}
 	pelCanvas.PixelData = NewBlankImage(pelCanvas.PxCols, pelCanvas.PxRows, color.NRGBA64{128, 128, 128, 255})
-	// pelCanvas.ExtendBaseWidget(pelCanvas)
+	pelCanvas.ExtendBaseWidget(pelCanvas)
 	return pelCanvas
+}
+
+func (pelCanvas *PelCanvas) CreateRenderer() fyne.WidgetRenderer {
+	canvasImage := canvas.NewImageFromImage(pelCanvas.PixelData)
+	canvasImage.ScaleMode = canvas.ImageScalePixels
+	canvasImage.FillMode = canvas.ImageFillContain
+
+	canvasBorder := make([]canvas.Line, 4)
+	for i := 0; i < len(canvasBorder); i++ {
+		canvasBorder[i].StrokeColor = color.NRGBA64{100, 100, 100, 255}
+		canvasBorder[i].StrokeWidth = 2
+	}
+	renderer := &PelCanvasRenderer{
+		pelCanvas:    pelCanvas,
+		canvasImage:  canvasImage,
+		canvasBorder: canvasBorder,
+	}
+	pelCanvas.renderer = renderer
+	return renderer
 }
