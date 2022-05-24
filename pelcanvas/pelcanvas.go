@@ -57,7 +57,7 @@ func NewPelCanvas(state *apptype.State, config apptype.PelCanvasConfig) *PelCanv
 		PelCanvasConfig: config,
 		appState:        state,
 	}
-	pelCanvas.PixelData = NewBlankImage(pelCanvas.PxCols, pelCanvas.PxRows, color.NRGBA64{128, 128, 128, 255})
+	pelCanvas.PixelData = NewBlankImage(pelCanvas.PxCols, pelCanvas.PxRows, color.NRGBA{128, 128, 128, 255})
 	pelCanvas.ExtendBaseWidget(pelCanvas)
 	return pelCanvas
 }
