@@ -87,3 +87,28 @@ func (pelCanvas *PelCanvas) TryPan(previousCoord *fyne.PointEvent, ev *desktop.M
 		pelCanvas.Pan(*previousCoord, ev.PointEvent)
 	}
 }
+
+func (pelCanvas *PelCanvas) SetColor(c color.Color, x, y int) {
+	if nrgba, ok := pelCanvas.PixelData.(*image.NRGBA); ok {
+		nrgba.Set(x, y, c)
+	}
+	if rgba, ok := pelCanvas.PixelData.(*image.RGBA); ok {
+		rgba.Set(x, y, c)
+	}
+	pelCanvas.Refresh()
+}
+
+func (pelCanvas *PelCanvas) MouseToCanvasXY(ev *desktop.MouseEvent) (*int, *int) {
+	bounds := pelCanvas.Bounds()
+	if !InBounds(ev.Position, bounds) {
+		return nil, nil
+	}
+	pxSize := float32(pelCanvas.PxSize)
+	xOffset := pelCanvas.CanvasOffset.X
+	yOffset := pelCanvas.CanvasOffset.Y
+
+	x := int((ev.Position.X - xOffset) / pxSize)
+	y := int((ev.Position.Y - yOffset) / pxSize)
+
+	return &x, &y
+}

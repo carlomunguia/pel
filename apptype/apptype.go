@@ -4,9 +4,15 @@ import (
 	"image/color"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/driver/desktop"
 )
 
 type BrushType = int
+
+type Brushable interface {
+	SetColor(c color.Color, x, y int)
+	MouseToCanvasXY(ev *desktop.MouseEvent) (*int, *int)
+}
 
 type PelCanvasConfig struct {
 	DrawingArea    fyne.Size
