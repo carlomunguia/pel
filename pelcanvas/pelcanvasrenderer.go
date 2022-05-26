@@ -9,6 +9,7 @@ type PelCanvasRenderer struct {
 	pelCanvas    *PelCanvas
 	canvasImage  *canvas.Image
 	canvasBorder []canvas.Line
+	canvasCursor []fyne.CanvasObject
 }
 
 func (renderer *PelCanvasRenderer) MinSize() fyne.Size {
@@ -21,6 +22,7 @@ func (renderer *PelCanvasRenderer) Objects() []fyne.CanvasObject {
 		objects = append(objects, &renderer.canvasBorder[i])
 	}
 	objects = append(objects, renderer.canvasImage)
+	objects = append(objects, renderer.canvasCursor...)
 	return objects
 }
 
@@ -71,4 +73,8 @@ func (renderer *PelCanvasRenderer) Refresh() {
 	}
 	renderer.Layout(renderer.pelCanvas.Size())
 	canvas.Refresh(renderer.canvasImage)
+}
+
+func (renderer *PelCanvasRenderer) SetCursor(objects []fyne.CanvasObject) {
+	renderer.canvasCursor = objects
 }
