@@ -51,5 +51,18 @@ to add color to the canvas:
 ```
 - click the swatch with the selected color
 - click the canvas & your color will populate in the pixel cursor!
+```
 
-
+## saving your image
+to save:
+```
+- click the menu on the top left
+- click Save 
+```
+to save-as
+```
+- click on the menu on the top left
+- click Save As
+- enter a name for your file
+- click Ok
+```

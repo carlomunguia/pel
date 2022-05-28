@@ -2,12 +2,29 @@ package ui
 
 import (
 	"errors"
+	"image/png"
+	"os"
 	"strconv"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 )
+
+func saveFileDialog(app *AppInit) {
+	dialog.ShowFileSave(func(uri fyne.URIWriteCloser, e error) {
+		if uri == nil {
+			return
+		} else {
+			err := png.Encode(uri, app.PelCanvas.PixelData)
+			if err != nil {
+				dialog.ShowError(err, app.PelWindow)
+				return
+			}
+			app.State.SetFilePath(uri.URI().Path())
+		}
+	}, app.PelWindow)
+}
 
 func BuildNewMenu(app *AppInit) *fyne.MenuItem {
 	return fyne.NewMenuItem("New", func() {
@@ -56,7 +73,42 @@ func BuildMenus(app *AppInit) *fyne.Menu {
 	return fyne.NewMenu(
 		"File",
 		BuildNewMenu(app),
+		BuildSaveMenu(app),
+		BuildSaveAsMenu(app),
 	)
+}
+
+func BuildSaveAsMenu(app *AppInit) *fyne.MenuItem {
+	return fyne.NewMenuItem("Save As...", func() {
+		saveFileDialog(app)
+	})
+}
+
+func BuildSaveMenu(app *AppInit) *fyne.MenuItem {
+	return fyne.NewMenuItem("Save", func() {
+		if app.State.FilePath == "" {
+			saveFileDialog(app)
+		} else {
+			tryClose := func(fh *os.File) {
+				err := fh.Close()
+				if err != nil {
+					dialog.ShowError(err, app.PelWindow)
+				}
+			}
+			fh, err := os.Create(app.State.FilePath)
+			defer tryClose(fh)
+
+			if err != nil {
+				dialog.ShowError(err, app.PelWindow)
+				return
+			}
+			err = png.Encode(fh, app.PelCanvas.PixelData)
+			if err != nil {
+				dialog.ShowError(err, app.PelWindow)
+				return
+			}
+		}
+	})
 }
 
 func SetupMenus(app *AppInit) {
