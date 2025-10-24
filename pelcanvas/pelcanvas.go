@@ -6,7 +6,7 @@ import (
 	"image"
 	"image/color"
 	"log"
-	"pel/apptype"
+	"github.com/carlomunguia/pel/apptype"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"

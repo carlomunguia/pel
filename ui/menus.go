@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"pel/util"
+	"github.com/carlomunguia/pel/util"
 	"strconv"
 
 	"fyne.io/fyne/v2"

@@ -3,7 +3,7 @@ package brush
 
 import (
 	"image/color"
-	"pel/apptype"
+	"github.com/carlomunguia/pel/apptype"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"

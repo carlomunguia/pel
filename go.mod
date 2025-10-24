@@ -1,4 +1,4 @@
-module pel
+module github.com/carlomunguia/pel
 
 go 1.25.3
 

@@ -4,7 +4,7 @@ package ui
 import (
 	"image/color"
 	"log"
-	"pel/swatch"
+	"github.com/carlomunguia/pel/swatch"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"

@@ -2,7 +2,7 @@
 package pelcanvas
 
 import (
-	"pel/pelcanvas/brush"
+	"github.com/carlomunguia/pel/pelcanvas/brush"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/driver/desktop"

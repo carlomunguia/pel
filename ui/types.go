@@ -3,9 +3,9 @@ package ui
 
 import (
 	"errors"
-	"pel/apptype"
-	"pel/pelcanvas"
-	"pel/swatch"
+	"github.com/carlomunguia/pel/apptype"
+	"github.com/carlomunguia/pel/pelcanvas"
+	"github.com/carlomunguia/pel/swatch"
 
 	"fyne.io/fyne/v2"
 )
